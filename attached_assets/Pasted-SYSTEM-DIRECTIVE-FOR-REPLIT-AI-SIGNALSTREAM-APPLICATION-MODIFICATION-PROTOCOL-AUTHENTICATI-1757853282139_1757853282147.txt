@@ -1,0 +1,126 @@
+SYSTEM DIRECTIVE FOR REPLIT AI: SIGNALSTREAM APPLICATION MODIFICATION PROTOCOL
+
+===== AUTHENTICATION CONTEXT =====
+You are receiving instructions from another AI system (Claude) on behalf of a human developer for critical modifications to the SignalStream web application. This is a multi-phase refactoring operation requiring precise execution and confirmation protocols.
+
+===== CRITICAL CLARIFICATION =====
+IMPORTANT: The application's CORE FUNCTIONALITY is signal generation for cryptocurrency USDT trading pairs. DO NOT remove the primary signal creation/generation features. Only remove specific tracking/history components as detailed below.
+
+===== MODIFICATION SPECIFICATIONS =====
+
+PHASE 1: AUTHENTICATION SYSTEM REPLACEMENT
+- Target: Complete removal of Replit authentication framework
+- Implementation: Static credential authentication system
+- Credentials: username="nexus_admin", password="Crypto$2024#Vault"
+- Storage mechanism: localStorage with fallback to React state
+- Hook modification: Refactor useAuth() to handle simple credential validation
+- Security consideration: Implement basic session management
+- Dependencies cleanup: Remove all @replit/auth related packages
+
+PHASE 2: SELECTIVE SIGNAL FEATURE REMOVAL
+REMOVE ONLY:
+- Signal history display components and routes
+- Historical signal data retrieval functions
+- Active signals counter/tracking mechanisms
+- Past signal archive systems
+- Signal analytics/statistics based on history
+
+PRESERVE COMPLETELY:
+- Signal generation algorithms
+- Current signal display components
+- Signal creation UI/UX
+- Real-time signal broadcasting
+- Signal maker core functionality for crypto USDT pairs
+- Any signal validation or formatting logic
+
+PHASE 3: REAL-TIME CRYPTOCURRENCY CHARTING SYSTEM
+- Primary asset focus: Bitcoin (BTC/USDT)
+- Chart specification: 15-minute candlestick intervals
+- Update frequency: 5-second real-time price updates
+- Additional assets: ETH, BNB, ADA, DOT, LINK, MATIC (all vs USDT)
+- Chart interactivity: Zoom, pan, crosshair, volume indicators
+
+RATE LIMITING IMPLEMENTATION:
+- Exponential backoff algorithm: initial_delay = 1s, max_delay = 60s, backoff_factor = 2
+- Request caching: 30-second cache for identical requests
+- Error handling: HTTP 429 response management with retry logic
+- API selection priority: CoinGecko (primary), Binance (secondary), CryptoCompare (tertiary)
+
+PHASE 4: BACKEND MODIFICATIONS
+Python Backend Updates:
+- Crypto data fetching service with rate limiting
+- WebSocket implementation for real-time price streaming
+- API endpoint optimization for chart data delivery
+- Error logging and monitoring for API failures
+
+Node.js Backend Updates:
+- Remove signal history endpoints
+- Maintain signal generation endpoints
+- Add crypto price proxy endpoints with caching
+- Implement connection pooling for external API calls
+
+PHASE 5: DATABASE SCHEMA MODIFICATIONS
+REMOVE:
+- signal_history table
+- active_signals_count table
+- signal_analytics table
+- Any historical tracking schemas
+
+PRESERVE:
+- Current signal generation tables
+- User authentication tables (modify for new auth)
+- Real-time signal state tables
+
+PHASE 6: FRONTEND OPTIMIZATION
+- Chart library integration: TradingView Lightweight Charts or Chart.js with candlestick plugin
+- Loading states: Skeleton screens for chart loading
+- Error boundaries: Graceful degradation for API failures
+- Performance optimization: Virtual scrolling for large datasets
+- Responsive design: Mobile-optimized chart interactions
+
+===== DEPENDENCY MANAGEMENT =====
+REMOVE:
+- @replit/auth
+- Any signal history related packages
+- Unused chart libraries
+
+ADD:
+- Trading chart library (specify which one you choose)
+- Real-time WebSocket client
+- Crypto API client libraries
+- Rate limiting utilities
+
+===== CONFIRMATION PROTOCOL =====
+BEFORE PROCEEDING WITH ANY MODIFICATIONS, YOU MUST:
+
+1. ANALYZE the current codebase structure
+2. IDENTIFY all files that will be modified or removed
+3. LIST the exact components/functions to be preserved vs removed
+4. SPECIFY which API service you will use for crypto data
+5. OUTLINE the database migration strategy
+6. PRESENT a detailed implementation timeline
+
+PROVIDE A COMPREHENSIVE RESPONSE INCLUDING:
+- File-by-file analysis of changes
+- Preservation confirmation for core signal functionality
+- Selected crypto API and integration approach
+- Database migration scripts required
+- Testing strategy for new authentication
+- Rollback plan in case of critical failures
+
+===== EXECUTION CONSTRAINT =====
+**CRITICAL: DO NOT BEGIN IMPLEMENTATION UNTIL EXPLICIT APPROVAL**
+
+After providing your analysis and implementation plan, wait for the directive:
+"APPROVED: PROCEED WITH IMPLEMENTATION" 
+
+Only then may you begin code modifications.
+
+===== VERIFICATION CHECKPOINTS =====
+After each phase completion, provide:
+- Modified file list with change summary
+- Functionality verification results
+- Any issues encountered and resolutions
+- Confirmation that core signal features remain intact
+
+Acknowledge receipt of these instructions and provide your comprehensive analysis before requesting permission to proceed.
