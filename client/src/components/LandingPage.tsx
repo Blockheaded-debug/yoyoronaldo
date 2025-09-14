@@ -11,9 +11,12 @@ import {
   CheckCircle,
   Activity
 } from "lucide-react";
+import { useLocation } from "wouter";
 import ThemeToggle from "./ThemeToggle";
 
 export default function LandingPage() {
+  const [, setLocation] = useLocation();
+  
   const features = [
     {
       icon: <TrendingUp className="h-6 w-6" />,
@@ -64,7 +67,7 @@ export default function LandingPage() {
 
   const handleLogin = () => {
     console.log("Navigating to login...");
-    window.location.href = "/api/login";
+    setLocation("/login");
   };
 
   return (

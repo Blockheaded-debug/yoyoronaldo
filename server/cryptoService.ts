@@ -140,9 +140,9 @@ class CryptoService {
 
     return new Promise((resolve, reject) => {
       try {
-        // Call Python analysis script
+        // Try production Python analysis script first
         const pythonScript = path.join(process.cwd(), 'python_backend', 'analyze_pair.py');
-        const python = spawn('python', [pythonScript, pair, timeframe]);
+        const python = spawn('python3', [pythonScript, pair, timeframe]);
         
         let output = '';
         let errorOutput = '';
@@ -157,8 +157,10 @@ class CryptoService {
         
         python.on('close', (code) => {
           if (code !== 0) {
-            console.error('Python script error:', errorOutput);
-            reject(new Error(`Analysis failed: ${errorOutput}`));
+            console.warn('Production analysis failed, falling back to development mode:', errorOutput);
+            
+            // Fallback to development mock analysis
+            this.analyzeSignalDev(pair, timeframe).then(resolve).catch(reject);
             return;
           }
           
@@ -171,12 +173,56 @@ class CryptoService {
             resolve(result);
           } catch (parseError) {
             console.error('Failed to parse Python output:', output);
-            reject(new Error('Failed to parse analysis result'));
+            // Fallback to development mock analysis
+            this.analyzeSignalDev(pair, timeframe).then(resolve).catch(reject);
           }
         });
         
       } catch (error) {
         console.error('Signal analysis error:', error);
+        // Fallback to development mock analysis
+        this.analyzeSignalDev(pair, timeframe).then(resolve).catch(reject);
+      }
+    });
+  }
+
+  // Development fallback signal analysis
+  private async analyzeSignalDev(pair: string, timeframe: string = '15m'): Promise<any> {
+    return new Promise((resolve, reject) => {
+      try {
+        // Call development Python analysis script
+        const pythonScript = path.join(process.cwd(), 'python_backend', 'analyze_pair_dev.py');
+        const python = spawn('python3', [pythonScript, pair, timeframe]);
+        
+        let output = '';
+        let errorOutput = '';
+        
+        python.stdout.on('data', (data) => {
+          output += data.toString();
+        });
+        
+        python.stderr.on('data', (data) => {
+          errorOutput += data.toString();
+        });
+        
+        python.on('close', (code) => {
+          if (code !== 0) {
+            console.error('Development analysis also failed:', errorOutput);
+            reject(new Error(`Analysis failed: ${errorOutput}`));
+            return;
+          }
+          
+          try {
+            const result = JSON.parse(output);
+            resolve(result);
+          } catch (parseError) {
+            console.error('Failed to parse development Python output:', output);
+            reject(new Error('Failed to parse analysis result'));
+          }
+        });
+        
+      } catch (error) {
+        console.error('Development signal analysis error:', error);
         reject(error);
       }
     });

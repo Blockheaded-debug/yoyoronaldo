@@ -10,16 +10,25 @@ const STATIC_CREDENTIALS = {
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  const pgStore = connectPg(session);
-  const sessionStore = new pgStore({
-    conString: process.env.DATABASE_URL,
-    createTableIfMissing: true, // Allow table creation
-    ttl: sessionTtl,
-    tableName: "sessions",
-  });
+  
+  // Provide a fallback session secret for development if not set
+  const sessionSecret = process.env.SESSION_SECRET || 'nexus-crypto-dev-session-secret-fallback-key-2024';
+  
+  // Use memory store as fallback if DATABASE_URL is not provided
+  let sessionStore;
+  if (process.env.DATABASE_URL) {
+    const pgStore = connectPg(session);
+    sessionStore = new pgStore({
+      conString: process.env.DATABASE_URL,
+      createTableIfMissing: true, // Allow table creation
+      ttl: sessionTtl,
+      tableName: "sessions",
+    });
+  }
+  
   return session({
-    secret: process.env.SESSION_SECRET!,
-    store: sessionStore,
+    secret: sessionSecret,
+    store: sessionStore, // Will use memory store if undefined
     resave: false,
     saveUninitialized: false,
     cookie: {

@@ -1,6 +1,5 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./staticAuth";
 import { cryptoService } from "./cryptoService";
 import { spawn } from "child_process";
@@ -15,8 +14,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // put application routes here
   // prefix all routes with /api
 
-  // use storage to perform CRUD operations on the storage interface
-  // e.g. storage.getUser(id) or storage.upsertUser(user)
+  // Note: storage interface available but not needed for current functionality
+  // To enable database features, ensure DATABASE_URL environment variable is set
 
   // Crypto Signal Analysis Route (enhanced with caching) - PROTECTED
   app.post('/api/analyze', isAuthenticated, async (req, res) => {
