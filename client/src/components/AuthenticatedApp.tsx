@@ -5,11 +5,11 @@ import TradingDashboard from "./TradingDashboard";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function AuthenticatedApp() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     console.log("Logging out...");
-    window.location.href = "/api/logout";
+    await logout();
   };
 
   return (
