@@ -38,8 +38,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Crypto Price Proxy Endpoints (Phase 4 enhancement)
   
-  // Get current prices for multiple cryptocurrencies - PROTECTED
-  app.get('/api/crypto/prices', isAuthenticated, async (req, res) => {
+  // Get current prices for multiple cryptocurrencies - PUBLIC (crypto prices are public data)
+  app.get('/api/crypto/prices', async (req, res) => {
     try {
       const { ids } = req.query;
       const cryptoIds = ids ? (ids as string).split(',') : [
